@@ -27,8 +27,8 @@ def norm(path, K):
 
 
 if __name__ == '__main__':
-    path = './database/PNG/test/01_12_42.png'
-    ima = image.imread(path)
+    patch_path = './database/PNG/test/01_12_42.png'
+    ima = image.imread(patch_path)
     K = 3
     # 如果想儲存壓縮後的圖片, 將下面這句註解拿掉
     #plt.imsave(r'C:\Users\使用者名稱\Downloads\compressed.jpg', image_compressed)
