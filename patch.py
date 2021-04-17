@@ -9,9 +9,11 @@ from sklearn.cluster import MiniBatchKMeans
 def norm(path, K):
     """
     使用k-means對圖片做normlization
-    path=圖片位址
+
+    path=圖片位址,
     k=k群數量
     """
+    file_basename = os.path.basename(patch_norm_file).split('.')[0]
     # 讀取圖片
     ima = image.imread(path)
     w, h, d = tuple(ima.shape)
@@ -29,11 +31,18 @@ def norm(path, K):
         for j in range(h):
             image_compressed[i][j] = centers[labels[label_idx]]
             label_idx += 1
+    plt.imsave('./database/PNG/norm/benign/' +
+               file_basename + '.png', image_compressed)
 
     return image_compressed
 
 
 def SVS_to_PNGPatch(svs_file):
+    """
+    將SVS切成數張512*512的patch
+
+    svs_file=svs檔案位址
+    """
     # 去除副檔名
     file_basename = os.path.basename(svs_file).split('.')[0]
 
@@ -61,32 +70,39 @@ def SVS_to_PNGPatch(svs_file):
                         file_basename + '_' + str(i) + '_' + str(j) + '.png')
             print(file_basename + '_' + str(i) + '_' + str(j) + '.png')
 
+    return region
+
 
 if __name__ == '__main__':
     svs_directory = './database/SVS/'
     svs_file_list = os.listdir(svs_directory)
 
-    for i in range(len(svs_file_list)):
-        svs_file = svs_directory + svs_file_list[i]
-        SVS_to_PNGPatch(svs_file)
-
     # svs_file = './database/SVS/01.svs'
     # SVS_to_PNGPatch(svs_file)
 
-    patch_path = './database/PNG/test/01_12_42.png'
-    ima = image.imread(patch_path)
+    patch_directory = './database/PNG/train/benign/'
+    patach_file_list = os.listdir(patch_directory)
     K = 3
-    norm_img = norm(patch_path, K)
-    print(norm_img.shape)
-    # 如果想儲存壓縮後的圖片, 將下面這句註解拿掉
-    #plt.imsave(r'C:\Users\使用者名稱\Downloads\compressed.jpg', image_compressed)
+
+    # patch_file = './database/PNG/test/01_12_42.png'
+    # ima = image.imread(patch_file)
+    # norm_img = norm(patch_file, K)
+
+    # print(norm_img.shape)
     # 顯示原圖跟壓縮圖的對照
-    plt.figure(figsize=(12, 9))
-    plt.subplot(121)
-    plt.title('Original photo')
-    plt.imshow(ima)
-    plt.subplot(122)
-    plt.title(f'Compressed to KMeans={K} colors')
-    plt.imshow(norm_img)
-    plt.tight_layout()
-    plt.show()
+    # plt.figure(figsize=(12, 9))
+    # plt.subplot(121)
+    # plt.title('Original photo')
+    # plt.imshow(ima)
+    # plt.subplot(122)
+    # plt.title(f'Compressed to KMeans={K} colors')
+    # plt.imshow(norm_img)
+    # plt.tight_layout()
+    # plt.show()
+
+    for i in range(len(patach_file_list)):
+        patch_norm_file = patch_directory + patach_file_list[i]
+        norm_img = norm(patch_norm_file, K)
+
+        # svs_file = svs_directory + svs_file_list[i]
+        # SVS_to_PNGPatch(svs_file)
