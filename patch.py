@@ -6,14 +6,13 @@ from matplotlib import image
 from sklearn.cluster import MiniBatchKMeans
 
 
-def norm(path, K):
+def kmeans(path, K):
     """
     使用k-means對圖片做normlization
 
     path=圖片位址,
     k=k群數量
     """
-    file_basename = os.path.basename(path).split('.')[0]
     # 讀取圖片
     ima = image.imread(path)
     w, h, d = tuple(ima.shape)
@@ -31,8 +30,6 @@ def norm(path, K):
         for j in range(h):
             image_compressed[i][j] = centers[labels[label_idx]]
             label_idx += 1
-    plt.imsave('./database/' +
-               file_basename + '_norm.png', image_compressed)
 
     return image_compressed
 
@@ -47,11 +44,11 @@ def SVS_to_PNGPatch(svs_file):
     file_basename = os.path.basename(svs_file).split('.')[0]
 
     # 建立目錄
-    if os.path.exists('./database/PNG/total/' + file_basename) == False:
-        os.mkdir('./database/PNG/total/' + file_basename)
-        print(file_basename+"已建立")
-    else:
-        print(file_basename+"已存在")
+    # if os.path.exists('./database/PNG/TCGA Molecular Subtype/PRAD.1-ERG/' + file_basename) == False:
+    #     os.mkdir('./database/PNG/TCGA Molecular Subtype/PRAD.1-ERG/' + file_basename)
+    #     print(file_basename+"已建立")
+    # else:
+    #     print(file_basename+"已存在")
 
     # 讀取SVS
     slide = ops.OpenSlide(svs_file)
@@ -65,31 +62,33 @@ def SVS_to_PNGPatch(svs_file):
     # 儲存Patch為PNG
     for i in range(int(N)):
         for j in range(int(M)):
+            PNG_file = './database/PNG/TCGA Molecular Subtype/PRAD.1-ERG/' + \
+                file_basename + '_' + str(i) + '_' + str(j) + '.png'
+
             region = slide.read_region((i*512, j*512), 0, (512, 512))
-            region.save('./database/PNG/total/' + file_basename + '/' +
-                        file_basename + '_' + str(i) + '_' + str(j) + '.png')
-            print(file_basename + '_' + str(i) + '_' + str(j) + '.png')
+            region.save(PNG_file)
+            print(PNG_file)
 
     return region
 
 
 if __name__ == '__main__':
-    svs_directory = './database/SVS/'
-    svs_file_list = os.listdir(svs_directory)
+    # svs_directory = './database/TCGA Molecular Subtype/PRAD.1-ERG/'
+    # svs_file_list = os.listdir(svs_directory)
 
-    # svs_file = './database/SVS/01.svs'
-    # SVS_to_PNGPatch(svs_file)
+    svs_file = './database/SVS/TCGA Molecular Subtype/PRAD.1-ERG/TCGA-EJ-7783-01A-01-BS1.dbad8dce-d564-4202-a47f-82797a65bf63.svs'
+    SVS_to_PNGPatch(svs_file)
 
-    patch_directory = './database/PNG/train/benign/'
-    patach_file_list = os.listdir(patch_directory)
-    K = 3
+    # patch_directory = './database/PNG/TCGA Molecular Subtype/PRAD.1-ERG/'
+    # patach_file_list = os.listdir(patch_directory)
+    # K = 3
 
     # patch_file = './database/PNG/test/01_12_42.png'
     # ima = image.imread(patch_file)
-    # norm_img = norm(patch_file, K)
+    # norm_img = kmeans(patch_file, K)
 
     # print(norm_img.shape)
-    # 顯示原圖跟壓縮圖的對照
+    # # 顯示原圖跟壓縮圖的對照
     # plt.figure(figsize=(12, 9))
     # plt.subplot(121)
     # plt.title('Original photo')
@@ -100,9 +99,13 @@ if __name__ == '__main__':
     # plt.tight_layout()
     # plt.show()
 
-    for i in range(len(patach_file_list)):
-        patch_norm_file = patch_directory + patach_file_list[i]
-        norm_img = norm(patch_norm_file, K)
+    # for i in range(len(svs_file_list)):
+    #     file_basename = os.path.basename(svs_file_list[i]).split('.')[0]
 
-        # svs_file = svs_directory + svs_file_list[i]
-        # SVS_to_PNGPatch(svs_file)
+    #     # patch_norm_file = patch_directory + patach_file_list[i]
+    #     # norm_img = kmeans(patch_norm_file, K)
+    #     # plt.imsave('./database/PNG/norm/01/' +
+    #     #            file_basename + '_norm.png', norm_img)
+
+    #     svs_file = svs_directory + svs_file_list[i]
+    #     SVS_to_PNGPatch(svs_file)

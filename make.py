@@ -2,7 +2,7 @@ import pandas as pd               # 資料處理套件
 import matplotlib.pyplot as plt   # 資料視覺化套件
 import numpy as np
 import csv
-file = 'res_epoch20.csv'
+file = 'res_epoch50_norm.csv'
 
 exampleFile = open('./database/CSV/'+file)  # 打开csv文件
 exampleReader = csv.reader(exampleFile)  # 读取csv文件
@@ -31,18 +31,21 @@ if ".csv" in file:
         file = file[:-1]
 
 p1, = plt.plot(x, y, '-')
-p2, = plt.plot(x, z, '-')
-plt.title(file)
+p2, = plt.plot(x, j, '-')
+plt.title(file+"_accuracy")
 plt.xlabel("epoch")
-plt.legend([p2, p1], ["loss", "accuracy"])
+plt.legend([p1, p2], ["accuracy", "val_accuracy"])
+plt.xticks(np.arange(0, len(x), 5))
 plt.ylim(0, 1)
-plt.savefig('./chart/'+file+'-1.png')
+plt.savefig('./chart/'+file+'-acc.png')
 plt.show()
-p1, = plt.plot(x, j, '-')
+
+p1, = plt.plot(x, z, '-')
 p2, = plt.plot(x, k, '-')
-plt.title(file)
+plt.title(file+"_loss")
 plt.xlabel("epoch")
-plt.legend([p2, p1], ["val_loss", "val_accuracy"])
+plt.legend([p1, p2], ["loss", "val_loss"])
+plt.xticks(np.arange(0, len(x), 5))
 plt.ylim(0, 1)
-plt.savefig('./chart/'+file+'-2.png')
+plt.savefig('./chart/'+file+'-loss.png')
 plt.show()
