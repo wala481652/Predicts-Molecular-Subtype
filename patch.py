@@ -13,7 +13,7 @@ def norm(path, K):
     path=圖片位址,
     k=k群數量
     """
-    file_basename = os.path.basename(patch_norm_file).split('.')[0]
+    file_basename = os.path.basename(path).split('.')[0]
     # 讀取圖片
     ima = image.imread(path)
     w, h, d = tuple(ima.shape)
@@ -31,8 +31,8 @@ def norm(path, K):
         for j in range(h):
             image_compressed[i][j] = centers[labels[label_idx]]
             label_idx += 1
-    plt.imsave('./database/PNG/norm/benign/' +
-               file_basename + '.png', image_compressed)
+    plt.imsave('./database/' +
+               file_basename + '_norm.png', image_compressed)
 
     return image_compressed
 
