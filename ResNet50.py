@@ -1,11 +1,11 @@
 import tensorflow as tf
-from tensorflow.python.keras.backend import flatten
+# from tensorflow.python.keras.backend import flatten
 import tensorflow_addons as tfa
 from tensorflow.keras.applications import ResNet50
 
 
 def make_model():
-    metrics = [tf.keras.metrics.AUC(name='auc', multi_label=True)]
+    # metrics = [tf.keras.metrics.AUC(name='auc', multi_label=True)]
     learning_rate = 1e-4
 
     base_model = ResNet50(include_top=False, weights=None,
@@ -22,7 +22,7 @@ def make_model():
     model.compile(
         optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
         loss="categorical_crossentropy",
-        metrics=metrics
+        metrics=['accuracy']
     )
     model.summary()
     return model
