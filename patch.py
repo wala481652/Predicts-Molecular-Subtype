@@ -13,7 +13,6 @@ def norm(path, K):
     path=圖片位址,
     k=k群數量
     """
-    file_basename = os.path.basename(path).split('.')[0]
     # 讀取圖片
     ima = image.imread(path)
     w, h, d = tuple(ima.shape)
@@ -31,8 +30,6 @@ def norm(path, K):
         for j in range(h):
             image_compressed[i][j] = centers[labels[label_idx]]
             label_idx += 1
-    plt.imsave('./database/' +
-               file_basename + '_norm.png', image_compressed)
 
     return image_compressed
 
@@ -89,7 +86,7 @@ if __name__ == '__main__':
     # norm_img = norm(patch_file, K)
 
     # print(norm_img.shape)
-    # 顯示原圖跟壓縮圖的對照
+    # # 顯示原圖跟壓縮圖的對照
     # plt.figure(figsize=(12, 9))
     # plt.subplot(121)
     # plt.title('Original photo')
@@ -101,8 +98,12 @@ if __name__ == '__main__':
     # plt.show()
 
     for i in range(len(patach_file_list)):
+        file_basename = os.path.basename(patach_file_list[i]).split('.')[0]
+
         patch_norm_file = patch_directory + patach_file_list[i]
         norm_img = norm(patch_norm_file, K)
+        plt.imsave('./database/PNG/norm/benign/' +
+                   file_basename + '_norm.png', norm_img)
 
         # svs_file = svs_directory + svs_file_list[i]
         # SVS_to_PNGPatch(svs_file)

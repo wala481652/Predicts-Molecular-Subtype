@@ -19,6 +19,7 @@ BATCH_SIZE = 8
 IMAGE_SIZE = (512, 512)
 NUM_EPOCHS = 20
 
+
 with strategy.scope():
     model = make_model()
 
