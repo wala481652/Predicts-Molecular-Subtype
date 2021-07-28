@@ -87,7 +87,7 @@ def save_and_display_gradcam(img_path, heatmap, alpha=0.4):
 
 
 if __name__ == '__main__':
-    patch_path = './database/PNG/norm/benign/03_67_138.png'
+    patch_path = './database/PNG/PRAD.1-ERG/TCGA-KK-A6E1-01Z-00-DX1_89_137.png'
     img_size = (512, 512)
     img_array = preprocess_input(get_img_array(patch_path, size=img_size))
     last_conv_layer_name = "group_normalization"
@@ -103,12 +103,12 @@ if __name__ == '__main__':
 
     # 生成類激活熱圖
     heatmap = make_gradcam_heatmap(img_array, model, last_conv_layer_name)
-    plt.imshow(heatmap)
-    plt.show()
-    plt.imsave('./database/PNG/heatmap.png', heatmap)
+    # plt.imshow(heatmap)
+    # plt.show()
+    # plt.imsave('./database/PNG/TCGA-CH-5739-01A-01-BS1_26_20_heatmap.png', heatmap)
 
     heatmap_img = save_and_display_gradcam(patch_path, heatmap)
     plt.imshow(heatmap_img)
     plt.show()
-    # plt.imsave('./database/PNG/heatmap_img.png', heatmap_img)
-    heatmap_img.save('./database/PNG/heatmap_img.png')
+    # plt.imsave('./database/PNG/heatmap_img.pn-g', heatmap_img)
+    heatmap_img.save('./database/PNG/TCGA-KK-A6E1-01Z-00-DX1_89_137_heatmap_img.png')

@@ -1,10 +1,12 @@
-import openslide as ops
 import os
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import image
 from sklearn.cluster import MiniBatchKMeans
 
+os.environ['PATH'] = "./lib/openslide-win64-20171122/bin" + ";" + os.environ['PATH'] 
+print(os.environ['PATH'])
+import openslide as ops
 
 def kmeans(path, K):
     """
@@ -36,7 +38,7 @@ def kmeans(path, K):
 
 def SVS_to_PNGPatch(svs_file):
     """
-    將SVS切成數張512*512的patch
+    將SVS切成數張1024*1024的patch
 
     svs_file=svs檔案位址
     """
@@ -53,30 +55,30 @@ def SVS_to_PNGPatch(svs_file):
     # 讀取SVS
     slide = ops.OpenSlide(svs_file)
 
-    # 讀取SVS的長寬及Patch的位子
+    # 讀取SVS的長寬及Patch的數量
     [w, h] = slide.level_dimensions[0]
     print(w, h)
-    [N, M] = [w/512, h/512]
+    [N, M] = [w/1024, h/1024]
     print(N, M)
 
     # 儲存Patch為PNG
     for i in range(int(N)):
         for j in range(int(M)):
-            PNG_file = './database/PNG/TCGA Molecular Subtype/PRAD.1-ERG/' + \
-                file_basename + '_' + str(i) + '_' + str(j) + '.png'
-
-            region = slide.read_region((i*512, j*512), 0, (512, 512))
-            region.save(PNG_file)
-            print(PNG_file)
+            region = slide.read_region((i*1024, j*1024), 0, (1024, 1024))
+            # region.save('./database/PNG/TCGA Molecular Subtype/PRAD.1-ERG/' + file_basename + '/' +
+            #             file_basename + '_' + str(i) + '_' + str(j) + '.png')
+            region.save('./database/PNG/TCGA-HC-7077-01Z-00-DX1/' +
+                        file_basename + '_' + str(i) + '_' + str(j) + '.png')
+            print(file_basename + '_' + str(i) + '_' + str(j) + '.png')
 
     return region
 
 
 if __name__ == '__main__':
-    # svs_directory = './database/TCGA Molecular Subtype/PRAD.1-ERG/'
-    # svs_file_list = os.listdir(svs_directory)
+    svs_directory = './database/TCGA Molecular Subtype/PRAD.1-ERG/'
+    svs_file_list = os.listdir(svs_directory)
 
-    svs_file = './database/SVS/TCGA Molecular Subtype/PRAD.1-ERG/TCGA-EJ-7783-01A-01-BS1.dbad8dce-d564-4202-a47f-82797a65bf63.svs'
+    svs_file = './database/TCGA Molecular Subtype/PRAD.1-ERG/TCGA-HC-7077-01Z-00-DX1.18652ead-c43f-41bd-aefd-5364bc4d236e.svs'
     SVS_to_PNGPatch(svs_file)
 
     # patch_directory = './database/PNG/TCGA Molecular Subtype/PRAD.1-ERG/'
@@ -100,7 +102,12 @@ if __name__ == '__main__':
     # plt.show()
 
     # for i in range(len(svs_file_list)):
-    #     file_basename = os.path.basename(svs_file_list[i]).split('.')[0]
+    #     svs_file = svs_directory + svs_file_list[i]
+    #     slide = ops.OpenSlide(svs_file)
+    #     print(svs_file)
+
+    # for i in range(len(svs_file_list)):
+    #     # file_basename = os.path.basename(svs_file_list[i]).split('.')[0]
 
     #     # patch_norm_file = patch_directory + patach_file_list[i]
     #     # norm_img = kmeans(patch_norm_file, K)
