@@ -2,7 +2,7 @@ import pandas as pd               # 資料處理套件
 import matplotlib.pyplot as plt   # 資料視覺化套件
 import numpy as np
 import csv
-file = 'GroundTruth.csv'
+file = '1100802.csv'
 
 exampleFile = open('./database/CSV/'+file)  # 打开csv文件
 exampleReader = csv.reader(exampleFile)  # 读取csv文件

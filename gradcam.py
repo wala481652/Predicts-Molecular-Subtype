@@ -87,15 +87,16 @@ def save_and_display_gradcam(img_path, heatmap, alpha=0.4):
 
 
 if __name__ == '__main__':
-    patch_path = './database/PNG/PRAD.1-ERG/TCGA-KK-A6E1-01Z-00-DX1_89_137.png'
+    patch_path = './database/PNG/PRAD.5-SPOP/TCGA-CH-5788-01A-01-BS1/TCGA-CH-5788-01A-01-BS1_5_12.png'
     img_size = (512, 512)
     img_array = preprocess_input(get_img_array(patch_path, size=img_size))
-    last_conv_layer_name = "group_normalization"
+    last_conv_layer_name = "batch_normalization"
 
-    model = load_model('model_resnet50')
+    model = load_model('1100802_model_resnet50')
     model.summary()
 
     # 刪除最後一層的softmax
+    
     model.layers[-1].activation = None
 
     # 打印最高預測類別
@@ -111,4 +112,4 @@ if __name__ == '__main__':
     plt.imshow(heatmap_img)
     plt.show()
     # plt.imsave('./database/PNG/heatmap_img.pn-g', heatmap_img)
-    heatmap_img.save('./database/PNG/TCGA-KK-A6E1-01Z-00-DX1_89_137_heatmap_img.png')
+    heatmap_img.save('./database/PNG/TCGA-CH-5788-01A-01-BS1_5_12_heatmap_img.png')
