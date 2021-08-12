@@ -1,4 +1,3 @@
-import openslide as ops
 import os
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,6 +7,7 @@ from sklearn.cluster import MiniBatchKMeans
 os.environ['PATH'] = "./lib/openslide-win64-20171122/bin" + \
     ";" + os.environ['PATH']
 print(os.environ['PATH'])
+import openslide as ops
 
 
 def kmeans(path, K):
@@ -48,8 +48,8 @@ def SVS_to_PNGPatch(svs_file):
     file_basename = os.path.basename(svs_file).split('.')[0]
 
     # 建立目錄
-    if os.path.exists('./database/PNG/PRAD.1-ERG/' + file_basename) == False:
-        os.mkdir('./database/PNG/PRAD.1-ERG/' + file_basename)
+    if os.path.exists('./database/PNG/PRAD.3-ETV4/' + file_basename) == False:
+        os.mkdir('./database/PNG/PRAD.3-ETV4/' + file_basename)
         print(file_basename+"已建立")
     else:
         print(file_basename+"已存在")
@@ -82,7 +82,7 @@ def SVS_to_PNGPatch(svs_file):
             else:
                 y = str(j)
 
-            region.save('./database/PNG/PRAD.1-ERG/' + file_basename +
+            region.save('./database/PNG/PRAD.3-ETV4/' + file_basename +
                         '/' + file_basename + '_' + x + '_' + y + '.png')
             print(file_basename + '_' + x + '_' + y + '.png')
 
@@ -90,13 +90,13 @@ def SVS_to_PNGPatch(svs_file):
 
 
 if __name__ == '__main__':
-    svs_directory = './database/TCGA Molecular Subtype/PRAD.1-ERG/'
+    svs_directory = './database/TCGA Molecular Subtype/PRAD.3-ETV4/'
     svs_file_list = os.listdir(svs_directory)
 
-    # svs_file = './database/TCGA Molecular Subtype/PRAD.1-ERG/TCGA-CH-5788-01A-01-BS1.c4e36368-30be-4dc8-9931-279afeeea401.svs'
+    # svs_file = './database/TCGA Molecular Subtype/PRAD.3-ETV4/TCGA-CH-5788-01A-01-BS1.c4e36368-30be-4dc8-9931-279afeeea401.svs'
     # SVS_to_PNGPatch(svs_file)
 
-    # patch_directory = './database/PNG/TCGA Molecular Subtype/PRAD.1-ERG/'
+    # patch_directory = './database/PNG/TCGA Molecular Subtype/PRAD.3-ETV4/'
     # patach_file_list = os.listdir(patch_directory)
     # K = 3
 

@@ -5,8 +5,7 @@ from tensorflow.keras.applications import ResNet50
 
 
 def make_model(input_shape):
-    AUC = [tf.keras.metrics.AUC(name='auc', multi_label=True)]
-    ACC = [tf.keras.metrics.Accuracy(name='accuracy', dtype=None)]
+
 
     learning_rate = 1e-4
 
@@ -24,11 +23,5 @@ def make_model(input_shape):
         # tf.keras.layers.Dropout(0.5),
         tf.keras.layers.Dense(2, activation='softmax')
     ])
-    model.compile(
-        optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
-        # loss="BinaryCrossentropy",
-        loss="categorical_crossentropy",
-        metrics='accuracy'
-    )
-    model.summary()
+
     return model

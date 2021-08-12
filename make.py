@@ -2,7 +2,7 @@ import pandas as pd               # 資料處理套件
 import matplotlib.pyplot as plt   # 資料視覺化套件
 import numpy as np
 import csv
-file = '1100802.csv'
+file = 'GroundTruth.csv'
 
 exampleFile = open('./database/CSV/'+file)  # 打开csv文件
 exampleReader = csv.reader(exampleFile)  # 读取csv文件
@@ -32,7 +32,7 @@ if ".csv" in file:
 
 p1, = plt.plot(x, y, '-')
 p2, = plt.plot(x, j, '-')
-plt.title(file+"_accuracy")
+plt.title("accuracy")
 plt.xlabel("epoch")
 plt.legend([p1, p2], ["accuracy", "val_accuracy"])
 plt.xticks(np.arange(0, len(x), 5))

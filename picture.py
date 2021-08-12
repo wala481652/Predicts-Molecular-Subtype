@@ -5,9 +5,9 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet import preprocess_input
 # from tensorflow.keras.callbacks import CSVLogger
 
-csv_path = './database/CSV/TCGA-CH-5788-01A-01-BS1_5_12.csv'
+csv_path = './database/CSV/TCGA-CH-5744-01A-01-TS1.csv'
 # patch_path = './database/PNG/TCGA-CH-5740-01A-01-BS1/TCGA-CH-5740-01A-01-BS1_0_0.png'
-patch_path = './database/PNG/PRAD.5-SPOP/TCGA-CH-5788-01A-01-BS1/'
+patch_path = './database/PNG/PRAD.1-ERG/TCGA-CH-5744-01A-01-TS1/'
 patch_file = os.listdir(patch_path)
 table = []
 
